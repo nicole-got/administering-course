@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
 			$table->string('phone', 15);
 			$table->set('genero', ['feminino', 'masculino','outros'])->nullable();
 			$table->set('status',[1,0])->default(1);
-			$table->dateTime('created',0)->nullable();
 
 			$table->timestamps();
 		});
