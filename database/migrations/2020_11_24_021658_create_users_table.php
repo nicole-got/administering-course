@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
 			$table->set('status',[1,0])->default(1);
 			$table->dateTime('created',0)->nullable();
 
-            $table->timestamps();
+			$table->timestamps();
 		});
 	}
 
