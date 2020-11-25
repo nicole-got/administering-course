@@ -14,4 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', 'App\Http\Controllers\Controller@homepage');
 Route::get('/cadastro', 'App\Http\Controllers\Controller@cadastrar');
-Route::get('/login', 'App\Http\Controllers\Controller@login');
+
+
+Route::get('/login', 'App\Http\Controllers\Controller@viewlogin');
+Route::post('/login', ['as'=> 'user.login', 'App\Http\Controllers\Controller@login']);

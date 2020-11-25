@@ -25,8 +25,8 @@ class Controller extends BaseController
         echo "Cadastro";
     }
 
-    public function login()
+    public function viewlogin()
     {
-        echo "Login";
+        return view('user.login');
     }
 }
