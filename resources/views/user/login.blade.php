@@ -26,9 +26,6 @@
                 {!! Form::text('username', null, ['id '=> 'login',  'class' => 'fadeIn second', 'placeholder' => 'Usuário']) !!}
                 {!! Form::password('password', ['id '=> 'password', 'class'=> 'fadeIn third', 'placeholder'=>'Senha']) !!}
                 {!! Form::submit('Entrar', ['class' => 'fadeIn fourth']) !!}
-                {{-- <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-                <input type="submit" class="fadeIn fourth" value="Log In"> --}}
             {!! Form::close() !!}
 
         </div>

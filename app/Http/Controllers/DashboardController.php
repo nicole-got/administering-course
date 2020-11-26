@@ -17,13 +17,14 @@ class DashboardController extends Controller
         $this->validator  = $validator;
     }
 
-    public function Indexd()
+    public function Index()
     {
         echo "Bem vindo a dashboard";
     }
 
     public function auth(Request $request)
     {
+
         $data = [
             'email'     => $request->get('username'),
             'password'  => $request->get('password')

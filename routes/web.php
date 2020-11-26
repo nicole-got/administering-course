@@ -17,6 +17,6 @@ Route::get('/cadastro', 'App\Http\Controllers\Controller@cadastrar');
 
 
 Route::get('/login', 'App\Http\Controllers\Controller@viewlogin');
-Route::post('/login', ['as'=> 'user.login', 'uses' => 'App\Http\Controllers\DashboardController@auth']);
-Route::post('/dashboard', ['as'=> 'user.dashboard', 'uses' => 'App\Http\Controllers\DashboardController@index']);
+Route::post('/auth', ['as'=> 'user.login', 'uses' => 'App\Http\Controllers\DashboardController@auth']);
+Route::get('/dashboard', ['as'=> 'user.dashboard', 'uses' => 'App\Http\Controllers\DashboardController@index']);
 
