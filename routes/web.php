@@ -19,4 +19,8 @@ Route::get('/cadastro', 'App\Http\Controllers\Controller@cadastrar');
 Route::get('/login', 'App\Http\Controllers\Controller@viewlogin');
 Route::post('/auth', ['as'=> 'user.login', 'uses' => 'App\Http\Controllers\DashboardController@auth']);
 Route::get('/dashboard', ['as'=> 'user.dashboard', 'uses' => 'App\Http\Controllers\DashboardController@index']);
+Route::get('/student', ['as'=> 'student', 'uses' => 'App\Http\Controllers\StudentController@index']);
+Route::post('/student', ['as'=> 'student.create', 'uses' => 'App\Http\Controllers\StudentController@create']);
+
+Route::resource('user', 'App\Http\Controllers\UsersController');
 

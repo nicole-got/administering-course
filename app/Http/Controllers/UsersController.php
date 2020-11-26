@@ -11,103 +11,47 @@ use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Repositories\UserRepository;
 use App\Validators\UserValidator;
+use App\Services\UserService;
 
-/**
- * Class UsersController.
- *
- * @package namespace App\Http\Controllers;
- */
 class UsersController extends Controller
 {
-    /**
-     * @var UserRepository
-     */
+    protected $service;
     protected $repository;
 
-    /**
-     * @var UserValidator
-     */
     protected $validator;
 
-    /**
-     * UsersController constructor.
-     *
-     * @param UserRepository $repository
-     * @param UserValidator $validator
-     */
-    public function __construct(UserRepository $repository, UserValidator $validator)
+    public function __construct(UserService $service, UserValidator $validator,UserRepository $repository)
     {
-        $this->repository = $repository;
-        $this->validator  = $validator;
+        $this->repository   = $repository;
+        $this->service      = $service;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
         $users = $this->repository->all();
 
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $users,
-            ]);
-        }
-
-        return view('users.index', compact('users'));
+        return view('user.index', [
+            'users' => $users
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  UserCreateRequest $request
-     *
-     * @return \Illuminate\Http\Response
-     *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
-     */
     public function store(UserCreateRequest $request)
     {
-        try {
+        $request = $this->service->store($request->all());
+        $users = $request['success'] ? $request['data'] : null;
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+        session()->flush('success', [
+            'success'   => '',
+            'messages'  => $request['messages']
+        ]);
 
-            $user = $this->repository->create($request->all());
+        $users = $this->repository->all();
 
-            $response = [
-                'message' => 'User created.',
-                'data'    => $user->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        return view('user.dashboard', [
+            'users' => $users
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $user = $this->repository->find($id);
@@ -189,16 +133,17 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        $deleted = $this->repository->delete($id);
+        $request = $this->service->destroy($id);
 
-        if (request()->wantsJson()) {
+        session()->flush('success', [
+            'success'   => '',
+            'messages'  => $request['messages']
+        ]);
 
-            return response()->json([
-                'message' => 'User deleted.',
-                'deleted' => $deleted,
-            ]);
-        }
+        $users = $this->repository->all();
 
-        return redirect()->back()->with('message', 'User deleted.');
+        return view('user.dashboard', [
+            'users' => $users
+        ]);
     }
 }

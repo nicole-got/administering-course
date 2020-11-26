@@ -21,7 +21,12 @@ class DashboardController extends Controller
 
     public function Index()
     {
-        return view('user.dashboard');
+
+        $users = $this->repository->all();
+
+        return view('user.dashboard', [
+            'users' => $users
+        ]);
     }
 
     public function auth(Request $request)

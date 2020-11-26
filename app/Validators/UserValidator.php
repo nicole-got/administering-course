@@ -12,13 +12,15 @@ use \Prettus\Validator\LaravelValidator;
  */
 class UserValidator extends LaravelValidator
 {
-    /**
-     * Validation Rules
-     *
-     * @var array
-     */
     protected $rules = [
-        ValidatorInterface::RULE_CREATE => [],
+        ValidatorInterface::RULE_CREATE => [
+            'name' => "required",
+            'email'=> "required",
+            'password'=>"required",
+            'phone'=> "required",
+            'genero'=> "required",
+        ],
         ValidatorInterface::RULE_UPDATE => [],
     ];
+
 }
