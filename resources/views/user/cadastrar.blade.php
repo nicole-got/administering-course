@@ -22,15 +22,14 @@
                 </div>
 
                 <!-- Login Form -->
-                {!! Form::open(['route'=>'user.login', 'method'=> 'post']) !!}
-                    {!! Form::text('username', null, ['id '=> 'login',  'class' => 'fadeIn second', 'placeholder' => 'Usuário']) !!}
+                {!! Form::open(['route'=>'user.store', 'method'=> 'post']) !!}
+                    {!! Form::text('name', null, ['id '=> 'name',  'class' => 'fadeIn second', 'placeholder' => 'Nome']) !!}
+                    {!! Form::text('email', null, ['id '=> 'email',  'class' => 'fadeIn second', 'placeholder' => 'Email']) !!}
                     {!! Form::password('password', ['id '=> 'password', 'class'=> 'fadeIn third', 'placeholder'=>'Senha']) !!}
-                    {!! Form::submit('Entrar', ['class' => 'fadeIn fourth']) !!}
+                    {!! Form::submit('Cadastrar', ['class' => 'fadeIn fourth']) !!}
                 {!! Form::close() !!}
-
-                <a href="{{route('user.cadastrar')}}" >Cadastrar</a>
+                <a href="{{route('viewlogin')}}" >Entrar</a>
             </div>
-            
         </div>
     </body>
 </html>

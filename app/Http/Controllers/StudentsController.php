@@ -11,103 +11,46 @@ use App\Http\Requests\StudentCreateRequest;
 use App\Http\Requests\StudentUpdateRequest;
 use App\Repositories\StudentRepository;
 use App\Validators\StudentValidator;
+use App\Services\StudentService;
 
-/**
- * Class StudentsController.
- *
- * @package namespace App\Http\Controllers;
- */
+
 class StudentsController extends Controller
 {
-    /**
-     * @var StudentRepository
-     */
     protected $repository;
-
-    /**
-     * @var StudentValidator
-     */
+    protected $service;
     protected $validator;
 
-    /**
-     * StudentsController constructor.
-     *
-     * @param StudentRepository $repository
-     * @param StudentValidator $validator
-     */
-    public function __construct(StudentRepository $repository, StudentValidator $validator)
+    
+    public function __construct(StudentService $service,StudentRepository $repository, StudentValidator $validator)
     {
         $this->repository = $repository;
-        $this->validator  = $validator;
+        $this->service      = $service;
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $students = $this->repository->all();
-
-        if (request()->wantsJson()) {
-
-            return response()->json([
-                'data' => $students,
-            ]);
-        }
-
-        return view('students.index', compact('students'));
+        $courses = \App\Entities\Course::pluck("name","id")->all();
+        
+        return view('student.index', [
+            'courses' => $courses
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  StudentCreateRequest $request
-     *
-     * @return \Illuminate\Http\Response
-     *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
-     */
     public function store(StudentCreateRequest $request)
     {
-        try {
+        $request = $this->service->store($request->all());
+        $student = $request['success'] ? $request['data'] : null;
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_CREATE);
+        session()->flush('success', [
+            'success'   => '',
+            'messages'  => $request['messages']
+        ]);
 
-            $student = $this->repository->create($request->all());
-
-            $response = [
-                'message' => 'Student created.',
-                'data'    => $student->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        return redirect()->route('user.dashboard');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         $student = $this->repository->find($id);
@@ -122,71 +65,30 @@ class StudentsController extends Controller
         return view('students.show', compact('student'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         $student = $this->repository->find($id);
-
-        return view('students.edit', compact('student'));
+        $courses = \App\Entities\Course::pluck("name","id")->all();
+        
+        return view('student.edit', [
+            "student" => $student,
+            "courses" => $courses
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  StudentUpdateRequest $request
-     * @param  string            $id
-     *
-     * @return Response
-     *
-     * @throws \Prettus\Validator\Exceptions\ValidatorException
-     */
     public function update(StudentUpdateRequest $request, $id)
     {
-        try {
+        $request = $this->service->update($request->all(), $id);
 
-            $this->validator->with($request->all())->passesOrFail(ValidatorInterface::RULE_UPDATE);
+        session()->flush('success', [
+            'success'   => '',
+            'messages'  => $request['messages']
+        ]);
 
-            $student = $this->repository->update($request->all(), $id);
-
-            $response = [
-                'message' => 'Student updated.',
-                'data'    => $student->toArray(),
-            ];
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
-        } catch (ValidatorException $e) {
-
-            if ($request->wantsJson()) {
-
-                return response()->json([
-                    'error'   => true,
-                    'message' => $e->getMessageBag()
-                ]);
-            }
-
-            return redirect()->back()->withErrors($e->getMessageBag())->withInput();
-        }
+        return redirect()->route('user.dashboard');
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $deleted = $this->repository->delete($id);

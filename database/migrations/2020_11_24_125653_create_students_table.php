@@ -17,21 +17,22 @@ class CreateStudentsTable extends Migration
 	{
 		Schema::create('students', function(Blueprint $table) {
 			$table->increments('id');
-			$table->integer('user_id')->unsined();
-			$table->char('cpf', 14)->unique();
-			$table->date('date_birth')->nullable();
+			$table->integer('course_id')->unsined();
+			$table->string('name', 50);
 			$table->integer('registration');
 			$table->char('uf',2);
 			$table->string('city',100);
+			$table->string('cep',8);
 			$table->string('neighborhood',100);
 			$table->string('street',100);
 			$table->string('number',10);
 			$table->string('complement',30)->nullable();
+			$table->set('status', ['ativo','inativo'])->default('ativo')->nullable();
 
 			$table->timestamps();
 			$table->softDeletes();
 			
-			$table->foreign('user_id')->references('id')->on('users');
+			$table->foreign('course_id')->references('id')->on('courses');
 		});
 	}
 

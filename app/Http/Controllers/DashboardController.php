@@ -21,11 +21,16 @@ class DashboardController extends Controller
 
     public function Index()
     {
-
-        $users = $this->repository->all();
+        $students = \App\Entities\Student::all();
+        foreach($students as $key => $student){
+            $c = \App\Entities\Course::find($student->course_id);
+            $students[$key]->course_id = $c->name;
+        }
+        $courses = \App\Entities\Course::paginate(3);
 
         return view('user.dashboard', [
-            'users' => $users
+            'students' => $students,
+            'courses' => $courses,
         ]);
     }
 
@@ -39,23 +44,10 @@ class DashboardController extends Controller
 
         try
         {
-            if(env('PASSWORD_HASH'))
-            {
-                Auth::attempt($data, false);
-            }
-            else
-            {
-                $user = $this->repository->findWhere($data)->first();
-                if(!$user) throw new Exception("Credenciais inválidas");
-                // $user = $this->repository->findWhere(['email' => $request->get('username')])->first();
-                // var_dump($user);
-                // dd($user->password);
-                // if(!$user) throw new Exception("Email inválido");
-                // dd($user->password);
-                // if($user->attributes->password != $request->get('password')) throw new Exception("Senha inválida");
+            $user = $this->repository->findWhere($data)->first();
+            if(!$user) throw new Exception("Credenciais inválidas");
 
-                Auth::login($user);
-            }
+            Auth::login($user);
             return redirect()->route('user.dashboard');
         }
         catch (Exception $err)
@@ -63,6 +55,5 @@ class DashboardController extends Controller
             return $err->getMessage();
         }
 
-        // dd($request->all());
     }
 }

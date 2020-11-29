@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Usuário</title>
+	<title>Aluno</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="../https://via.placeholder.com/32x32" type="image/x-icon"/>
 	
@@ -90,7 +90,7 @@
 			<div class="content">
 				<div class="page-inner">
 					<div class="page-header">
-						<h4 class="page-title">Usuário</h4>
+						<h4 class="page-title">Aluno</h4>
 						<ul class="breadcrumbs">
 						</ul>
 					</div>
@@ -98,29 +98,76 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
-									<div class="card-title">Novo usuário</div>
-                                </div>
-                                {{-- @if(session('success'))
-                                    <h2>{{ session('success')['messages'] }}</h2>
-                                @else
-                                <h2>Não ouve retorno</h2>
-                                @endif --}}
+									<div class="card-title">Novo aluno</div>
+								</div>
 								<div class="card-body">
 									<div class="row">
 										<div class="col-md-12 col-lg-12">
-                                            {!! Form::open(['route'=>'user.store', 'method'=> 'post']) !!}
+                                            {!! Form::open(['route'=>'student.store', 'method'=> 'post']) !!}
                                             <div class="form-group">
-                                                <label for="name">Nome</label>
-                                                {!! Form::text('name', null, ['id '=> 'nome',  'class' => 'form-control', 'placeholder' => 'Nome', 'type' => 'email', 'required' => true]) !!}
-											</div>
+                                                <label for="registration">Matrícula</label>
+                                                {!! Form::text('registration', null, ['id '=> 'registration',  'class' => 'form-control', 'placeholder' => 'mátricula', 'type' => 'matricula']) !!}
+                                            </div>
 											<div class="form-group">
-                                                <label for="email2">Email Address</label>
-                                                {!! Form::text('email', null, ['id '=> 'email2',  'class' => 'form-control', 'placeholder' => 'Email', 'type' => 'email', 'required' => true]) !!}
-												<small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                                <label for="name">Name</label>
+                                                {!! Form::text('name', null, ['id '=> 'name',  'class' => 'form-control', 'placeholder' => 'Nome', 'required' => true]) !!}
 											</div>
-											<div class="form-group">
-                                                <label for="password">Password</label>
-                                                {!! Form::password('password', ['id '=> 'password', 'class'=> 'form-control', 'placeholder'=>'Senha', 'type' => 'password', 'required' => true]) !!}
+                                            <div class="form-group">
+                                                <label for="course_id">Curso</label>
+                                                {!! Form::select('course_id', $courses ?? [], null, ['id '=> 'course',  'class' => 'form-control', 'required' => true]) !!}
+											</div>
+                                            <div class="row">
+                                                <div class="col-md-10 col-lg-10">
+                                                    <div class="form-group form-floating-label">
+                                                        <label for="cep">CEP</label>
+                                                        {!! Form::text('cep', null, ['wire:model' => 'cep','id '=> 'cep',  'class' => 'form-control', 'placeholder' => 'CEP', 'type' => 'cep', 'required' => true]) !!}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 col-lg-2">
+                                                    <div class="form-group" style="margin-top: 28px !important;">
+                                                        <button id="buscaCep" class="btn btn-warning">Pesquisar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4 col-lg-4">
+                                                    <div class="form-group form-floating-label">
+                                                        <label for="uf">UF</label>
+                                                        {!! Form::text('uf', null, ['id '=> 'uf',  'class' => 'form-control', 'placeholder' => 'UF', 'type' => 'uf', 'required' => true]) !!}
+                                                    </div>
+                                                </div>  
+                                                <div class="col-md-4 col-lg-4">
+                                                    <div class="form-group form-floating-label">
+                                                        <label for="city">Cidade</label>
+                                                        {!! Form::text('city', null, ['id '=> 'city',  'class' => 'form-control', 'placeholder' => 'Cidade', 'type' => 'city', 'required' => true]) !!}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-lg-4">
+                                                    <div class="form-group form-floating-label">
+                                                        <label for="neighborhood">Bairro</label>
+                                                        {!! Form::text('neighborhood', null, ['id '=> 'neighborhood',  'class' => 'form-control', 'placeholder' => 'Bairro', 'type' => 'neighborhood', 'required' => true]) !!}
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4 col-lg-4">
+                                                    <div class="form-group form-floating-label">
+                                                        <label for="street">Rua</label>
+                                                        {!! Form::text('street', null, ['id '=> 'street',  'class' => 'form-control', 'placeholder' => 'Rua', 'type' => 'street', 'required' => true]) !!}
+                                                    </div>
+                                                </div> 
+                                                <div class="col-md-4 col-lg-4">
+                                                    <div class="form-group form-floating-label">
+                                                        <label for="number">Número</label>
+                                                        {!! Form::text('number', null, ['id '=> 'number',  'class' => 'form-control', 'placeholder' => 'Número', 'type' => 'number', 'required' => true]) !!}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-lg-4">
+                                                    <div class="form-group form-floating-label">
+                                                        <label for="complement">Complamento</label>
+                                                        {!! Form::text('complement', null, ['id '=> 'complement',  'class' => 'form-control', 'placeholder' => 'Complemento']) !!}
+                                                    </div>
+                                                </div>
                                             </div>
 										</div>
 									</div>
@@ -222,6 +269,22 @@
         <!-- Millenium DEMO methods, don't include it in your project! -->
         <script src="{{ asset('assets/js/setting-demo2.js') }}"></script>
         <script>
+            $("#buscaCep").on('click', function(){
+                var numCep = $('#cep').val();
+                var url = "http://serviceweb.aix.com.br/aixapi/api/cep/"+numCep;
+
+                $.ajax({
+                    url: url,
+                    type: "get",
+                    dataType: 'jsonp',
+                    success:function(dados){
+                        $("#uf").val(dados.estado);
+                        $("#city").val(dados.cidade);
+                        $("#neighborhood").val(dados.bairro);
+                        $("#street").val(dados.logradouro);
+                    }
+                });
+            })
             $('#displayNotif').on('click', function(){
                 var placementFrom = $('#notify_placement_from option:selected').val();
                 var placementAlign = $('#notify_placement_align option:selected').val();

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Usuário</title>
+	<title>Curso</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="../https://via.placeholder.com/32x32" type="image/x-icon"/>
 	
@@ -90,7 +90,7 @@
 			<div class="content">
 				<div class="page-inner">
 					<div class="page-header">
-						<h4 class="page-title">Usuário</h4>
+						<h4 class="page-title">Curso</h4>
 						<ul class="breadcrumbs">
 						</ul>
 					</div>
@@ -98,35 +98,21 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
-									<div class="card-title">Novo usuário</div>
-                                </div>
-                                {{-- @if(session('success'))
-                                    <h2>{{ session('success')['messages'] }}</h2>
-                                @else
-                                <h2>Não ouve retorno</h2>
-                                @endif --}}
+									<div class="card-title">Editar curso</div>
+								</div>
 								<div class="card-body">
 									<div class="row">
 										<div class="col-md-12 col-lg-12">
-                                            {!! Form::open(['route'=>'user.store', 'method'=> 'post']) !!}
+                                            {!! Form::model($course,['route'=>['course.update', $course->id], 'method'=> 'put']) !!}
                                             <div class="form-group">
                                                 <label for="name">Nome</label>
-                                                {!! Form::text('name', null, ['id '=> 'nome',  'class' => 'form-control', 'placeholder' => 'Nome', 'type' => 'email', 'required' => true]) !!}
+                                                {!! Form::text('name', null, ['id '=> 'name',  'class' => 'form-control']) !!}
 											</div>
-											<div class="form-group">
-                                                <label for="email2">Email Address</label>
-                                                {!! Form::text('email', null, ['id '=> 'email2',  'class' => 'form-control', 'placeholder' => 'Email', 'type' => 'email', 'required' => true]) !!}
-												<small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
-											</div>
-											<div class="form-group">
-                                                <label for="password">Password</label>
-                                                {!! Form::password('password', ['id '=> 'password', 'class'=> 'form-control', 'placeholder'=>'Senha', 'type' => 'password', 'required' => true]) !!}
-                                            </div>
 										</div>
 									</div>
 								</div>
 								<div class="card-action">
-                                    {!! Form::submit('Cadastrar', ['class' => 'btn btn-success']) !!}
+                                    {!! Form::submit('Atualizar', ['class' => 'btn btn-success']) !!}
                                     {!! Form::close() !!}
 									{{-- <button class="btn btn-success">Submit</button> --}}
 									<button class="btn btn-danger">Cancel</button>

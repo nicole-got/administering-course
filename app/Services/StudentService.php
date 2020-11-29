@@ -4,33 +4,33 @@ namespace App\Services;
 
 use Illuminate\Database\QueryExceprion;
 use Exceprion;
-use App\Repositories\UserRepository;
-use App\Validators\UserValidator;
+use App\Repositories\StudentRepository;
+use App\Validators\StudentValidator;
 use Prettus\Validator\Contracts\ValidatorInterface;
 
-class UserService
+class StudentService
 {
     private $repository;
     private $validator;
 
-    public function __construct(UserRepository $repository, UserValidator $validator)
+    public function __construct(StudentRepository $repository, StudentValidator $validator)
     {
         $this->repository = $repository;
         $this->validator = $validator;
     }
 
     public function store($data)
-    {
+    { 
         try
         {
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
-            $usuario = $this->repository->create($data);
+            $student = $this->repository->create($data);
             return 
             [
                 'success'   => true,
-                'messages'   => 'Usuário criado',
-                'data'      => $usuario
+                'messages'   => 'Aluno criado',
+                'data'      => $student
             ];
         }
         catch(Exception $err)
@@ -47,20 +47,16 @@ class UserService
 
     public function update($data, $id)
     {
-        
         try
         {
-            $dados_antigos = $this->repository->find($id);
-            if(!$data["password"]) $data["password"] = $dados_antigos["password"];
-            
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
-            $usuario = $this->repository->update($data, $id);
+            $student = $this->repository->update($data, $id);
             return 
             [
                 'success'   => true,
-                'messages'   => 'Usuário Atualizado',
-                'data'      => $usuario
+                'messages'   => 'Aluno Atualizado',
+                'data'      => $student
             ];
         }
         catch(Exception $err)
@@ -77,13 +73,13 @@ class UserService
     }
 
     public function destroy($id)
-    { 
+    {
         try
         {
             $this->repository->delete($id);
             return  [
                 'success'   => true,
-                'messages'   => 'Usuário removido'
+                'messages'   => 'Aluno removido'
             ];
         }
         catch(Exception $err)

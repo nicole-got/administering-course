@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Entities\User;
+use App\Entities\Student;
+use App\Entities\Course;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,11 +18,23 @@ class DatabaseSeeder extends Seeder
     {
         User::create([
             'name'      =>  "nicole",
-            'email'     =>  "nicole3@nicole.com",
-            'password'  =>  env('PASSWORD_HASH') ? bcrypt("123456") : "123456",
-            'phone'     =>  "31997744787",
-            'genero'    =>  "feminino"
+            'email'     =>  "nicole2@nicole.com",
+            'password'  =>  "123456",
         ]);
-        // \App\Models\User::factory(10)->create();
+        Student::create([
+            'course_id'     =>  1,
+            'name'          =>  "aluno1",
+            'registration'  =>  "123555",
+            'uf'            =>  "mg",
+            'city'          =>  "belo horizonte",
+            'cep'           =>  "36554214",
+            'neighborhood'  =>  "jardim certo",
+            'street'        =>  "rua B",
+            'number'        =>  "251",
+            'complement'    =>  "casa",
+        ]);
+        Course::create([
+            'name'          =>  "administracao",
+        ]);
     }
 }

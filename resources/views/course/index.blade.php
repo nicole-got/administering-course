@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Tables - Millenium Bootstrap 4 Admin Dashboard</title>
+	<title>Curso</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="../https://via.placeholder.com/32x32" type="image/x-icon"/>
 	
@@ -57,20 +57,6 @@
 			
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
-					<div class="user">
-						<div class="avatar-sm float-left mr-2">
-							<img src="https://via.placeholder.com/50x50" alt="..." class="avatar-img rounded-circle">
-						</div>
-						<div class="info">
-							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-								<span>
-									Hizrian
-									<span class="user-level">Administrator</span>
-								</span>
-							</a>
-							<div class="clearfix"></div>
-						</div>
-					</div>
 					<ul class="nav nav-secondary">
                         <li class="nav-item">
 							<a href="{{route('user.dashboard')}}">
@@ -78,20 +64,20 @@
 								<p>Dashboard</p>
 							</a>
 						</li>
-						<li class="nav-item">
+						{{-- <li class="nav-item">
 							<a href="{{route('user.index')}}">
 								<i class="far fa-calendar-alt"></i>
 								<p>Usuario</p>
 							</a>
-						</li>
+						</li> --}}
 						<li class="nav-item">
-							<a href="{{route('user.index')}}">
+							<a href="{{route('student.index')}}">
 								<i class="fas fa-desktop"></i>
 								<p>Aluno</p>
 							</a>
                         </li>
                         <li class="nav-item">
-							<a href="../widgets.html">
+							<a href="{{route('course.index')}}">
 								<i class="fas fa-desktop"></i>
 								<p>Curso</p>
 							</a>
@@ -104,7 +90,7 @@
 			<div class="content">
 				<div class="page-inner">
 					<div class="page-header">
-						<h4 class="page-title">Forms</h4>
+						<h4 class="page-title">Curso</h4>
 						<ul class="breadcrumbs">
 						</ul>
 					</div>
@@ -112,31 +98,45 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
-									<div class="card-title">Form Elements</div>
+									<div class="card-title">Novo Curso - Manual</div>
 								</div>
 								<div class="card-body">
 									<div class="row">
 										<div class="col-md-12 col-lg-12">
-                                            {!! Form::open(['route'=>'student.create', 'method'=> 'post']) !!}
+                                            {!! Form::open(['route'=>'course.store', 'method'=> 'post']) !!}
 											<div class="form-group">
-                                                <label for="email2">Email Address</label>
-                                                {!! Form::text('email', null, ['id '=> 'email2',  'class' => 'form-control', 'placeholder' => 'Email', 'type' => 'email']) !!}
-												{{-- <input type="email" class="form-control" id="email2" placeholder="Enter Email"> --}}
-												<small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
-											</div>
-											<div class="form-group">
-                                                <label for="password">Password</label>
-                                                {!! Form::password('password', ['id '=> 'password', 'class'=> 'form-control', 'placeholder'=>'Senha', 'type' => 'password']) !!}
-												{{-- <input type="password" class="form-control" id="password" placeholder="Password"> --}}
+                                                <label for="name">Nome</label>
+                                                {!! Form::text('name', null, ['id '=> 'name',  'class' => 'form-control', 'placeholder' => 'Curso','required' => true]) !!}
                                             </div>
-                                            
 										</div>
 									</div>
 								</div>
 								<div class="card-action">
                                     {!! Form::submit('Cadastrar', ['class' => 'btn btn-success']) !!}
                                     {!! Form::close() !!}
-									{{-- <button class="btn btn-success">Submit</button> --}}
+									<button class="btn btn-danger">Cancel</button>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<div class="card-title">Novo Curso - Arquivo XML</div>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12 col-lg-12">
+                                            {!! Form::open(['route'=>'course.store', 'method'=> 'post', 'enctype'=>"multipart/form-data"]) !!}
+                                            <div class="form-group">
+                                                <label for="exampleFormControlFile1">Arquivo</label>
+                                                {!! Form::file('curso_xml', ['name' => 'curso_xml','id '=> 'exampleFormControlFile1',  'class' => 'form-control-file', 'required' => true]) !!}
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="card-action">
+                                    {!! Form::submit('Cadastrar', ['class' => 'btn btn-success']) !!}
+                                    {!! Form::close() !!}
 									<button class="btn btn-danger">Cancel</button>
 								</div>
 							</div>

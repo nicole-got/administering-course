@@ -14,11 +14,10 @@ class User extends Authenticatable
 
     public $timestamps  = true;
     protected $table    = 'users';
-    protected $fillable = ['name','email','password','phone','genero','status' ];
-    protected $hidden = ['password'];
+    protected $fillable = ['name','email','password'];
 
-    public function getPasswordAttribute($value){
-        $this->attributes['password'] = env('PASSWORD_HASH') ? bcrypt($value) : $value;
+    // public function getPasswordAttribute($value){
+    //     $this->attributes['password'] = env('PASSWORD_HASH') ? bcrypt($value) : $value;
 
-    }
+    // }
 }

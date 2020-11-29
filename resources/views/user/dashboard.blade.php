@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Tables - Millenium Bootstrap 4 Admin Dashboard</title>
+	<title>Dash</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="../https://via.placeholder.com/32x32" type="image/x-icon"/>
 	
@@ -20,31 +20,13 @@
 
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/millenium.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('assets/css/millenium.css') }}">
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="{{ asset('assets/css/demo.css') }}">
 </head>
 <body>
 	<div class="wrapper">
 		<div class="main-header">
-			<!-- Logo Header -->
-			<div class="logo-header" data-background-color="purple">
-				
-				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon">
-						<i class="icon-menu"></i>
-					</span>
-				</button>
-				<button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
-				<div class="nav-toggle">
-					<button class="btn btn-toggle toggle-sidebar">
-						<i class="icon-menu"></i>
-					</button>
-				</div>
-			</div>
-			<!-- End Logo Header -->
-
-			<!-- Navbar Header -->
 			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="purple2">
 				
 				<div class="container-fluid">
@@ -57,20 +39,6 @@
 			
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
-					<div class="user">
-						<div class="avatar-sm float-left mr-2">
-							<img src="https://via.placeholder.com/50x50" alt="..." class="avatar-img rounded-circle">
-						</div>
-						<div class="info">
-							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-								<span>
-									Hizrian
-									<span class="user-level">Administrator</span>
-								</span>
-							</a>
-							<div class="clearfix"></div>
-						</div>
-					</div>
 					<ul class="nav nav-secondary">
                         <li class="nav-item">
 							<a href="{{route('user.dashboard')}}">
@@ -78,20 +46,20 @@
 								<p>Dashboard</p>
 							</a>
 						</li>
-						<li class="nav-item">
+						{{-- <li class="nav-item">
 							<a href="{{route('user.index')}}">
 								<i class="far fa-calendar-alt"></i>
 								<p>Usuario</p>
 							</a>
-						</li>
+						</li> --}}
 						<li class="nav-item">
-							<a href="{{route('user.index')}}">
+							<a href="{{route('student.index')}}">
 								<i class="fas fa-desktop"></i>
 								<p>Aluno</p>
 							</a>
                         </li>
                         <li class="nav-item">
-							<a href="../widgets.html">
+							<a href="{{route('course.index')}}">
 								<i class="fas fa-desktop"></i>
 								<p>Curso</p>
 							</a>
@@ -113,45 +81,6 @@
 							</li>
 						</ul>
 					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="card">
-								<div class="card-header">
-									<div class="card-title">Usuários</div>
-								</div>
-								<div class="card-body">
-									<table class="table table-head-bg-success">
-										<thead>
-											<tr>
-												<th scope="col">#</th>
-												<th scope="col">Nome</th>
-												<th scope="col">Email</th>
-												<th scope="col">Telefone</th>
-                                                <th scope="col">Genero</th>
-                                                <th scope="col">Ação</th>
-											</tr>
-										</thead>
-										<tbody>
-                                            @foreach($users as $user)
-                                                <tr>
-                                                    <td>{{$user->id}}</td>
-                                                    <td>{{$user->name}}</td>
-                                                    <td>{{$user->email}}</td>
-                                                    <td>{{$user->phone}}</td>
-                                                    <td>{{$user->genero}}</td>
-                                                    <td>
-                                                        {!! Form::open( ['route' => ['user.destroy', $user->id ], 'method' => 'delete']) !!}
-                                                            {!! Form::submit('Remover') !!}
-                                                        {!! Form::close() !!}
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-                    </div>
                     <div class="row">
 						<div class="col-md-12">
 							<div class="card">
@@ -159,35 +88,49 @@
 									<div class="card-title">Alunos</div>
 								</div>
 								<div class="card-body">
-									<table class="table table-head-bg-danger">
-										<thead>
-											<tr>
-												<th scope="col">#</th>
-												<th scope="col">First</th>
-												<th scope="col">Last</th>
-												<th scope="col">Handle</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-												<td>@mdo</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Jacob</td>
-												<td>Thornton</td>
-												<td>@fat</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td colspan="2">Larry the Bird</td>
-												<td>@twitter</td>
-											</tr>
-										</tbody>
-									</table>
+									@if($students == "[]")
+										<div class="text-center">Não há alunos cadastrados</div>
+									@else
+										<table class="table table-head-bg-danger">
+											<thead>
+												<tr>
+													<th scope="col">#</th>
+													<th scope="col">Curso</th>
+													<th scope="col">Nome</th>
+													<th scope="col">Matrícula</th>
+													<th scope="col">UF</th>
+													<th scope="col">Cidade</th>
+													<th scope="col">Bairro</th>
+													<th scope="col">Rua</th>
+													<th scope="col">Numero</th>
+													<th scope="col">Complemento</th>
+													<th scope="col">Ação</th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach($students as $student)
+													<tr>
+														<td>{{$student->id}}</td>
+														<td>{{$student->course_id}}</td>
+														<td>{{$student->name}}</td>
+														<td>{{$student->registration}}</td>
+														<td>{{$student->uf}}</td>
+														<td>{{$student->city}}</td>
+														<td>{{$student->neighborhood}}</td>
+														<td>{{$student->street}}</td>
+														<td>{{$student->number}}</td>
+														<td>{{$student->complement}}</td>
+														<td>
+															{!! Form::open( ['route' => ['student.destroy', $student->id ], 'method' => 'delete']) !!}
+																{!! Form::submit('Remover') !!}
+															{!! Form::close() !!}
+														<a href="{{ route('student.edit', $student->id) }}">Editar</a>
+														</td>
+													</tr>
+												@endforeach
+											</tbody>
+										</table>
+									@endif
 								</div>
 							</div>
 						</div>
@@ -199,35 +142,34 @@
 									<div class="card-title">Cursos</div>
 								</div>
 								<div class="card-body">
-									<table class="table table-head-bg-success">
-										<thead>
-											<tr>
-												<th scope="col">#</th>
-												<th scope="col">First</th>
-												<th scope="col">Last</th>
-												<th scope="col">Handle</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Mark</td>
-												<td>Otto</td>
-												<td>@mdo</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Jacob</td>
-												<td>Thornton</td>
-												<td>@fat</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td colspan="2">Larry the Bird</td>
-												<td>@twitter</td>
-											</tr>
-										</tbody>
-									</table>
+									@if($courses == "[]")
+										<div class="text-center">Não há cursos cadastrados</div>
+									@else
+										<table class="table table-head-bg-success">
+											<thead>
+												<tr>
+													<th scope="col">#</th>
+													<th scope="col">Nome</th>
+													<th scope="col">Ação</th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach($courses as $course)
+													<tr>
+														<td>{{$course->id}}</td>
+														<td>{{$course->name}}</td>
+														<td>
+															{!! Form::open( ['route' => ['course.destroy', $course->id ], 'method' => 'delete']) !!}
+																{!! Form::submit('Remover') !!}
+															{!! Form::close() !!}
+														<a href="{{ route('course.edit', $course->id) }}">Editar</a>
+														</td>
+													</tr>
+												@endforeach
+											</tbody>
+										</table>
+											{!! $courses->links() !!}
+									@endif
 								</div>
 							</div>
 						</div>
@@ -235,79 +177,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- Custom template | don't include it in your project! -->
-		<div class="custom-template">
-			<div class="title">Settings</div>
-			<div class="custom-content">
-				<div class="switcher">
-					<div class="switch-block">
-						<h4>Logo Header</h4>
-						<div class="btnSwitch">
-							<button type="button" class="changeLogoHeaderColor" data-color="dark"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="blue"></button>
-							<button type="button" class="selected changeLogoHeaderColor" data-color="purple"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="light-blue"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="green"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="orange"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="red"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="white"></button>
-							<br/>
-							<button type="button" class="changeLogoHeaderColor" data-color="dark2"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="blue2"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="purple2"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="light-blue2"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="green2"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="orange2"></button>
-							<button type="button" class="changeLogoHeaderColor" data-color="red2"></button>
-						</div>
-					</div>
-					<div class="switch-block">
-						<h4>Navbar Header</h4>
-						<div class="btnSwitch">
-							<button type="button" class="changeTopBarColor" data-color="dark"></button>
-							<button type="button" class="changeTopBarColor" data-color="blue"></button>
-							<button type="button" class="changeTopBarColor" data-color="purple"></button>
-							<button type="button" class="changeTopBarColor" data-color="light-blue"></button>
-							<button type="button" class="changeTopBarColor" data-color="green"></button>
-							<button type="button" class="changeTopBarColor" data-color="orange"></button>
-							<button type="button" class="changeTopBarColor" data-color="red"></button>
-							<button type="button" class="changeTopBarColor" data-color="white"></button>
-							<br/>
-							<button type="button" class="changeTopBarColor" data-color="dark2"></button>
-							<button type="button" class="changeTopBarColor" data-color="blue2"></button>
-							<button type="button" class="selected changeTopBarColor" data-color="purple2"></button>
-							<button type="button" class="changeTopBarColor" data-color="light-blue2"></button>
-							<button type="button" class="changeTopBarColor" data-color="green2"></button>
-							<button type="button" class="changeTopBarColor" data-color="orange2"></button>
-							<button type="button" class="changeTopBarColor" data-color="red2"></button>
-						</div>
-					</div>
-					<div class="switch-block">
-						<h4>Sidebar</h4>
-						<div class="btnSwitch">
-							<button type="button" class="selected changeSideBarColor" data-color="white"></button>
-							<button type="button" class="changeSideBarColor" data-color="dark"></button>
-							<button type="button" class="changeSideBarColor" data-color="dark2"></button>
-						</div>
-					</div>
-					<div class="switch-block">
-						<h4>Background</h4>
-						<div class="btnSwitch">
-							<button type="button" class="changeBackgroundColor" data-color="bg2"></button>
-							<button type="button" class="changeBackgroundColor selected" data-color="bg1"></button>
-							<button type="button" class="changeBackgroundColor" data-color="bg3"></button>
-							<button type="button" class="changeBackgroundColor" data-color="dark"></button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- End Custom template -->
 	</div>
-	<!--   Core JS Files   -->
-	<script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
-	<script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-	<script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
 	<!-- jQuery UI -->
 	<script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
 	<script src={{ asset('"assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>

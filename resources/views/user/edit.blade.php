@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Usuário</title>
+	<title>Tables - Millenium Bootstrap 4 Admin Dashboard</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="../https://via.placeholder.com/32x32" type="image/x-icon"/>
 	
@@ -90,7 +90,7 @@
 			<div class="content">
 				<div class="page-inner">
 					<div class="page-header">
-						<h4 class="page-title">Usuário</h4>
+						<h4 class="page-title">Usuario</h4>
 						<ul class="breadcrumbs">
 						</ul>
 					</div>
@@ -98,17 +98,12 @@
 						<div class="col-md-12">
 							<div class="card">
 								<div class="card-header">
-									<div class="card-title">Novo usuário</div>
+									<div class="card-title">Usuario</div>
                                 </div>
-                                {{-- @if(session('success'))
-                                    <h2>{{ session('success')['messages'] }}</h2>
-                                @else
-                                <h2>Não ouve retorno</h2>
-                                @endif --}}
 								<div class="card-body">
 									<div class="row">
 										<div class="col-md-12 col-lg-12">
-                                            {!! Form::open(['route'=>'user.store', 'method'=> 'post']) !!}
+                                            {!! Form::model($user,['route'=>['user.update', $user->id], 'method'=> 'put']) !!}
                                             <div class="form-group">
                                                 <label for="name">Nome</label>
                                                 {!! Form::text('name', null, ['id '=> 'nome',  'class' => 'form-control', 'placeholder' => 'Nome', 'type' => 'email', 'required' => true]) !!}
@@ -120,13 +115,13 @@
 											</div>
 											<div class="form-group">
                                                 <label for="password">Password</label>
-                                                {!! Form::password('password', ['id '=> 'password', 'class'=> 'form-control', 'placeholder'=>'Senha', 'type' => 'password', 'required' => true]) !!}
+                                                {!! Form::password('password', ['id '=> 'password', 'class'=> 'form-control', 'placeholder'=>'Senha', 'type' => 'password']) !!}
                                             </div>
 										</div>
 									</div>
 								</div>
 								<div class="card-action">
-                                    {!! Form::submit('Cadastrar', ['class' => 'btn btn-success']) !!}
+                                    {!! Form::submit('Atualizar', ['class' => 'btn btn-success']) !!}
                                     {!! Form::close() !!}
 									{{-- <button class="btn btn-success">Submit</button> --}}
 									<button class="btn btn-danger">Cancel</button>
