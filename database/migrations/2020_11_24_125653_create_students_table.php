@@ -19,6 +19,7 @@ class CreateStudentsTable extends Migration
 			$table->increments('id');
 			$table->integer('course_id')->unsined();
 			$table->string('name', 50);
+			$table->string('photo')->nullable();
 			$table->integer('registration');
 			$table->char('uf',2);
 			$table->string('city',100);

@@ -14,5 +14,5 @@ class Student extends Authenticatable
 
     public $timestamps  = true;
     protected $table    = 'students';
-    protected $fillable = ['course_id','name','registration','uf','city','cep','neighborhood','street','number','complement','status'];
+    protected $fillable = ['course_id','name','registration','uf','city','cep','neighborhood','street','number','complement','status','photo'];
 }

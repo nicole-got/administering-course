@@ -34,7 +34,7 @@ class StudentsController extends Controller
         $students = \App\Entities\Student::paginate(3);
         foreach($students as $key => $student){
             $course = \App\Entities\Course::find($student->course_id);
-            if($course = "[]"){
+            if($course == "[]"){
                 $students[$key]->course_id = "";
             }else{
                 $students[$key]->course_id = $course->name;
@@ -59,7 +59,32 @@ class StudentsController extends Controller
 
     public function store(StudentCreateRequest $request)
     {
-        $request = $this->service->store($request->all());
+        
+        if($request->hasFile('photo')){
+            $nameExt = $request->file('photo')->getClientOriginalName();
+            $name = pathinfo($nameExt, PATHINFO_FILENAME);
+            $extension = $request->file('photo')->getClientOriginalExtension();
+            $nameSave = $name.'_'.time().'.'.$extension;
+            $path = $request->file('photo')->storeAs('public\img', $nameSave);
+        }else{
+            $nameSave = "nophoto.png";
+        }
+
+        $data = [
+            'course_id'     => $request->input('course_id'),
+            'name'          => $request->input('name'),
+            'registration'  => $request->input('registration'),
+            'uf'            => $request->input('uf'),
+            'city'          => $request->input('city'),
+            'cep'           => $request->input('cep'),
+            'neighborhood'  => $request->input('neighborhood'),
+            'street'        => $request->input('street'),
+            'number'        => $request->input('number'),
+            'complement'    => $request->input('complement'),
+            'photo'         => $nameSave
+        ];
+        $request = $this->service->store($data);
+        
         $student = $request['success'] ? $request['data'] : null;
 
         session()->flush('success', [

@@ -91,29 +91,41 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col-md-12 col-lg-12">
-                                            {!! Form::open(['route'=>'student.store', 'method'=> 'post']) !!}
+                                            {!! Form::open(['route'=>'student.store', 'method'=> 'post','enctype'=>"multipart/form-data"]) !!}
                                             <div class="row">
+                                                <div class="col-md-12 col-lg-12">
+                                                    <div class="form-group form-show-validation row">
+                                                        <label class="text-right">Upload Image <span class="required-label">*</span></label>
+                                                        <div class="col-lg-4 col-md-9 col-sm-8">
+                                                            <div class="input-file input-file-image">
+                                                                <img class="img-upload-preview img-circle" width="100" height="100" src="https://placehold.it/100x100" alt="preview">
+                                                                {!! Form::file('photo', ['name' => 'photo','id '=> 'uploadImg',  'class' => 'form-control form-control-file','accept'=>"image/*", 'required' => true]) !!}
+                                                                <label for="uploadImg" class="btn btn-primary btn-round btn-lg"><i class="fa fa-file-image"></i> Upload a Image</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-6 col-lg-6">
                                                     <div class="form-group">
-                                                        <label for="registration">Matrícula</label>
+                                                        <label for="registration">Matrícula<span class="required-label">*</span></label></label>
                                                         {!! Form::text('registration', null, ['id '=> 'registration',  'class' => 'form-control', 'placeholder' => 'mátricula', 'type' => 'matricula']) !!}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 col-lg-6">
                                                     <div class="form-group">
-                                                        <label for="name">Name</label>
+                                                        <label for="name">Name<span class="required-label">*</span></label></label>
                                                         {!! Form::text('name', null, ['id '=> 'name',  'class' => 'form-control', 'placeholder' => 'Nome', 'required' => true]) !!}
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="course_id">Curso</label>
+                                                <label for="course_id">Curso<span class="required-label">*</span></label></label>
                                                 {!! Form::select('course_id', $courses ?? [], null, ['id '=> 'course',  'class' => 'form-control', 'required' => true]) !!}
 											</div>
                                             <div class="row">
                                                 <div class="col-md-10 col-lg-10">
                                                     <div class="form-group form-floating-label">
-                                                        <label for="cep">CEP</label>
+                                                        <label for="cep">CEP<span class="required-label">*</span></label></label>
                                                         {!! Form::text('cep', null, ['wire:model' => 'cep','id '=> 'cep',  'class' => 'form-control', 'placeholder' => 'CEP', 'type' => 'cep', 'required' => true]) !!}
                                                     </div>
                                                 </div>
@@ -126,19 +138,19 @@
                                             <div class="row">
                                                 <div class="col-md-4 col-lg-4">
                                                     <div class="form-group form-floating-label">
-                                                        <label for="uf">UF</label>
+                                                        <label for="uf">UF<span class="required-label">*</span></label></label>
                                                         {!! Form::text('uf', null, ['id '=> 'uf',  'class' => 'form-control', 'placeholder' => 'UF', 'type' => 'uf', 'required' => true]) !!}
                                                     </div>
                                                 </div>  
                                                 <div class="col-md-4 col-lg-4">
                                                     <div class="form-group form-floating-label">
-                                                        <label for="city">Cidade</label>
+                                                        <label for="city">Cidade<span class="required-label">*</span></label></label>
                                                         {!! Form::text('city', null, ['id '=> 'city',  'class' => 'form-control', 'placeholder' => 'Cidade', 'type' => 'city', 'required' => true]) !!}
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 col-lg-4">
                                                     <div class="form-group form-floating-label">
-                                                        <label for="neighborhood">Bairro</label>
+                                                        <label for="neighborhood">Bairro<span class="required-label">*</span></label></label>
                                                         {!! Form::text('neighborhood', null, ['id '=> 'neighborhood',  'class' => 'form-control', 'placeholder' => 'Bairro', 'type' => 'neighborhood', 'required' => true]) !!}
                                                     </div>
                                                 </div> 
@@ -146,13 +158,13 @@
                                             <div class="row">
                                                 <div class="col-md-4 col-lg-4">
                                                     <div class="form-group form-floating-label">
-                                                        <label for="street">Rua</label>
+                                                        <label for="street">Rua<span class="required-label">*</span></label></label>
                                                         {!! Form::text('street', null, ['id '=> 'street',  'class' => 'form-control', 'placeholder' => 'Rua', 'type' => 'street', 'required' => true]) !!}
                                                     </div>
                                                 </div> 
                                                 <div class="col-md-4 col-lg-4">
                                                     <div class="form-group form-floating-label">
-                                                        <label for="number">Número</label>
+                                                        <label for="number">Número<span class="required-label">*</span></label></label>
                                                         {!! Form::text('number', null, ['id '=> 'number',  'class' => 'form-control', 'placeholder' => 'Número', 'type' => 'number', 'required' => true]) !!}
                                                     </div>
                                                 </div>
@@ -195,6 +207,7 @@
 											<thead>
 												<tr>
 													<th scope="col">#</th>
+													<th scope="col">Foto</th>
 													<th scope="col">Curso</th>
 													<th scope="col">Nome</th>
 													<th scope="col">Matrícula</th>
@@ -211,7 +224,13 @@
 											<tbody>
 												@foreach($students as $student)
 													<tr>
-														<td>{{$student->id}}</td>
+                                                        <td>{{$student->id}}</td>
+                                                        <td>
+                                                            <div class="notif-img"> 
+                                                                <img  src="{{ asset('/storage/img/'.$student->photo.'') }}" alt="Img Profile" style="max-width: 80px;max-height: 100px;">
+                                                                {{-- <img src="https://via.placeholder.com/50x50" alt="Img Profile"> --}}
+                                                            </div>
+                                                        </td>
 														<td>{{$student->course_id}}</td>
 														<td>{{$student->name}}</td>
 														<td>{{$student->registration}}</td>
@@ -329,7 +348,10 @@
             var element = document.getElementsByTagName("svg");
             element[0].removeAttribute("viewBox");
             element[1].removeAttribute("viewBox");
+        </script>
+        <script>
             $("#buscaCep").on('click', function(){
+                console.log("entrou")
                 var numCep = $('#cep').val();
                 var url = "http://serviceweb.aix.com.br/aixapi/api/cep/"+numCep;
 
