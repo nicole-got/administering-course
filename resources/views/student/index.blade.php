@@ -58,18 +58,6 @@
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
 					<ul class="nav nav-secondary">
-                        <li class="nav-item">
-							<a href="{{route('user.dashboard')}}">
-								<i class="far fa-calendar-alt"></i>
-								<p>Dashboard</p>
-							</a>
-						</li>
-						{{-- <li class="nav-item">
-							<a href="{{route('user.index')}}">
-								<i class="far fa-calendar-alt"></i>
-								<p>Usuario</p>
-							</a>
-						</li> --}}
 						<li class="nav-item">
 							<a href="{{route('student.index')}}">
 								<i class="fas fa-desktop"></i>
@@ -104,14 +92,20 @@
 									<div class="row">
 										<div class="col-md-12 col-lg-12">
                                             {!! Form::open(['route'=>'student.store', 'method'=> 'post']) !!}
-                                            <div class="form-group">
-                                                <label for="registration">Matrícula</label>
-                                                {!! Form::text('registration', null, ['id '=> 'registration',  'class' => 'form-control', 'placeholder' => 'mátricula', 'type' => 'matricula']) !!}
+                                            <div class="row">
+                                                <div class="col-md-6 col-lg-6">
+                                                    <div class="form-group">
+                                                        <label for="registration">Matrícula</label>
+                                                        {!! Form::text('registration', null, ['id '=> 'registration',  'class' => 'form-control', 'placeholder' => 'mátricula', 'type' => 'matricula']) !!}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-lg-6">
+                                                    <div class="form-group">
+                                                        <label for="name">Name</label>
+                                                        {!! Form::text('name', null, ['id '=> 'name',  'class' => 'form-control', 'placeholder' => 'Nome', 'required' => true]) !!}
+                                                    </div>
+                                                </div>
                                             </div>
-											<div class="form-group">
-                                                <label for="name">Name</label>
-                                                {!! Form::text('name', null, ['id '=> 'name',  'class' => 'form-control', 'placeholder' => 'Nome', 'required' => true]) !!}
-											</div>
                                             <div class="form-group">
                                                 <label for="course_id">Curso</label>
                                                 {!! Form::select('course_id', $courses ?? [], null, ['id '=> 'course',  'class' => 'form-control', 'required' => true]) !!}
@@ -175,11 +169,74 @@
 								<div class="card-action">
                                     {!! Form::submit('Cadastrar', ['class' => 'btn btn-success']) !!}
                                     {!! Form::close() !!}
-									{{-- <button class="btn btn-success">Submit</button> --}}
-									<button class="btn btn-danger">Cancel</button>
 								</div>
 							</div>
-						</div>
+                        </div>
+                        <div class="col-md-12">
+                            
+							<div class="card">
+								<div class="card-header">
+									<div class="card-title">Alunos</div>
+								</div>
+								<div class="card-body">
+									@if($students == "[]" || '')
+										<div class="text-center">Não há alunos cadastrados</div>
+                                    @else
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-6">
+                                                {!! Form::open( ['route' => ['student.search'], 'method' => 'post']) !!}
+                                                    {!! Form::text('id', null, ['id '=> 'id',  'class' => ' form-control-sm', 'type' => 'search', 'placeholder' => 'ID Aluno']) !!}
+                                                    {!! Form::submit('Pesquisar', ['class'=> 'btn btn-primary btn-round ml-auto']) !!}
+                                                {!! Form::close() !!}
+                                            </div>
+                                        </div>
+                                        <br>
+										<table class="table table-head-bg-danger">
+											<thead>
+												<tr>
+													<th scope="col">#</th>
+													<th scope="col">Curso</th>
+													<th scope="col">Nome</th>
+													<th scope="col">Matrícula</th>
+													<th scope="col">UF</th>
+													<th scope="col">Cidade</th>
+													<th scope="col">Bairro</th>
+													<th scope="col">Rua</th>
+													<th scope="col">Numero</th>
+													<th scope="col">Complemento</th>
+													<th scope="col">Status</th>
+													<th scope="col">Ação</th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach($students as $student)
+													<tr>
+														<td>{{$student->id}}</td>
+														<td>{{$student->course_id}}</td>
+														<td>{{$student->name}}</td>
+														<td>{{$student->registration}}</td>
+														<td>{{$student->uf}}</td>
+														<td>{{$student->city}}</td>
+														<td>{{$student->neighborhood}}</td>
+														<td>{{$student->street}}</td>
+														<td>{{$student->number}}</td>
+														<td>{{$student->complement}}</td>
+														<td>{{$student->status}}</td>
+														<td>
+															{!! Form::open( ['route' => ['student.destroy', $student->id ], 'method' => 'delete']) !!}
+																{!! Form::submit('Remover') !!}
+															{!! Form::close() !!}
+														<a href="{{ route('student.edit', $student->id) }}">Editar</a>
+														</td>
+													</tr>
+												@endforeach
+											</tbody>
+										</table>
+										{!! $students->links() !!}
+									@endif
+								</div>
+							</div>
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -269,6 +326,9 @@
         <!-- Millenium DEMO methods, don't include it in your project! -->
         <script src="{{ asset('assets/js/setting-demo2.js') }}"></script>
         <script>
+            var element = document.getElementsByTagName("svg");
+            element[0].removeAttribute("viewBox");
+            element[1].removeAttribute("viewBox");
             $("#buscaCep").on('click', function(){
                 var numCep = $('#cep').val();
                 var url = "http://serviceweb.aix.com.br/aixapi/api/cep/"+numCep;

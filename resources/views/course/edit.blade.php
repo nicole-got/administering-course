@@ -58,18 +58,6 @@
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
 					<ul class="nav nav-secondary">
-                        <li class="nav-item">
-							<a href="{{route('user.dashboard')}}">
-								<i class="far fa-calendar-alt"></i>
-								<p>Dashboard</p>
-							</a>
-						</li>
-						{{-- <li class="nav-item">
-							<a href="{{route('user.index')}}">
-								<i class="far fa-calendar-alt"></i>
-								<p>Usuario</p>
-							</a>
-						</li> --}}
 						<li class="nav-item">
 							<a href="{{route('student.index')}}">
 								<i class="fas fa-desktop"></i>
@@ -115,7 +103,7 @@
                                     {!! Form::submit('Atualizar', ['class' => 'btn btn-success']) !!}
                                     {!! Form::close() !!}
 									{{-- <button class="btn btn-success">Submit</button> --}}
-									<button class="btn btn-danger">Cancel</button>
+									<a href="{{route('course.index')}}" class="btn btn-danger">Cancel</a>
 								</div>
 							</div>
 						</div>

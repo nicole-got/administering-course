@@ -58,18 +58,6 @@
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
 					<ul class="nav nav-secondary">
-                        <li class="nav-item">
-							<a href="{{route('user.dashboard')}}">
-								<i class="far fa-calendar-alt"></i>
-								<p>Dashboard</p>
-							</a>
-						</li>
-						{{-- <li class="nav-item">
-							<a href="{{route('user.index')}}">
-								<i class="far fa-calendar-alt"></i>
-								<p>Usuario</p>
-							</a>
-						</li> --}}
 						<li class="nav-item">
 							<a href="{{route('student.index')}}">
 								<i class="fas fa-desktop"></i>
@@ -104,14 +92,26 @@
 									<div class="row">
 										<div class="col-md-12 col-lg-12">
                                             {!! Form::model($student,['route'=>['student.update', $student->id], 'method'=> 'put']) !!}
-                                            <div class="form-group">
-                                                <label for="registration">Matrícula</label>
-                                                {!! Form::text('registration', null, ['id '=> 'registration',  'class' => 'form-control', 'placeholder' => 'mátricula', 'type' => 'matricula']) !!}
+                                            <div class="row">
+                                                <div class="col-md-3 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label for="status">Status</label>
+                                                        {!! Form::select('status', ['ativo'=>'ativo','inativo'=>'inativo'], null, ['id '=> 'status',  'class' => 'form-control', 'required' => true]) !!}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label for="registration">Matrícula</label>
+                                                        {!! Form::text('registration', null, ['id '=> 'registration',  'class' => 'form-control', 'placeholder' => 'mátricula', 'type' => 'matricula']) !!}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3 col-lg-3">
+                                                    <div class="form-group">
+                                                        <label for="name">Name</label>
+                                                        {!! Form::text('name', null, ['id '=> 'name',  'class' => 'form-control', 'placeholder' => 'Nome', 'required' => true]) !!}
+                                                    </div>
+                                                </div>
                                             </div>
-											<div class="form-group">
-                                                <label for="name">Name</label>
-                                                {!! Form::text('name', null, ['id '=> 'name',  'class' => 'form-control', 'placeholder' => 'Nome', 'required' => true]) !!}
-											</div>
                                             <div class="form-group">
                                                 <label for="course_id">Curso</label>
                                                 {!! Form::select('course_id', $courses ?? [], null, ['id '=> 'course',  'class' => 'form-control', 'required' => true]) !!}
@@ -175,8 +175,7 @@
 								<div class="card-action">
                                     {!! Form::submit('Atualizar', ['class' => 'btn btn-success']) !!}
                                     {!! Form::close() !!}
-									{{-- <button class="btn btn-success">Submit</button> --}}
-									<button class="btn btn-danger">Cancel</button>
+									<a href="{{route('student.index')}}" class="btn btn-danger">Cancel</a>
 								</div>
 							</div>
 						</div>

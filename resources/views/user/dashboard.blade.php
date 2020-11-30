@@ -41,17 +41,11 @@
 				<div class="sidebar-content">
 					<ul class="nav nav-secondary">
                         <li class="nav-item">
-							<a href="{{route('user.dashboard')}}">
+							<a href="{{route('user.dashboard')}}" onclick="button()">
 								<i class="far fa-calendar-alt"></i>
 								<p>Dashboard</p>
 							</a>
 						</li>
-						{{-- <li class="nav-item">
-							<a href="{{route('user.index')}}">
-								<i class="far fa-calendar-alt"></i>
-								<p>Usuario</p>
-							</a>
-						</li> --}}
 						<li class="nav-item">
 							<a href="{{route('student.index')}}">
 								<i class="fas fa-desktop"></i>
@@ -91,6 +85,10 @@
 									@if($students == "[]")
 										<div class="text-center">Não há alunos cadastrados</div>
 									@else
+										{!! Form::open( ['route' => ['student.search'], 'method' => 'post']) !!}
+												{!! Form::text('id', null, ['id '=> 'id',  'class' => 'form-control form-control-sm', 'type' => 'search', 'placeholder' => 'ID Aluno']) !!}
+													{!! Form::submit('Pesquisar', ['class'=> 'btn btn-primary btn-round ml-auto']) !!}
+										{!! Form::close() !!}
 										<table class="table table-head-bg-danger">
 											<thead>
 												<tr>
@@ -130,6 +128,7 @@
 												@endforeach
 											</tbody>
 										</table>
+										{!! $students->links() !!}
 									@endif
 								</div>
 							</div>
@@ -168,7 +167,7 @@
 												@endforeach
 											</tbody>
 										</table>
-											{!! $courses->links() !!}
+										{!! $courses->links() !!}
 									@endif
 								</div>
 							</div>
@@ -190,6 +189,11 @@
 	<!-- Millenium DEMO methods, don't include it in your project! -->
 	<script src="{{ asset('assets/js/setting-demo2.js') }}"></script>
 	<script>
+		var element = document.getElementsByTagName("svg");
+		element[0].removeAttribute("viewBox");
+		element[1].removeAttribute("viewBox");
+		element[2].removeAttribute("viewBox");
+		element[3].removeAttribute("viewBox");
 		$('#displayNotif').on('click', function(){
 			var placementFrom = $('#notify_placement_from option:selected').val();
 			var placementAlign = $('#notify_placement_align option:selected').val();

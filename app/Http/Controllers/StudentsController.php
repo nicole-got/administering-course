@@ -31,10 +31,30 @@ class StudentsController extends Controller
     public function index()
     {
         $courses = \App\Entities\Course::pluck("name","id")->all();
+        $students = \App\Entities\Student::paginate(3);
+        foreach($students as $key => $student){
+            $course = \App\Entities\Course::find($student->course_id);
+            if($course = "[]"){
+                $students[$key]->course_id = "";
+            }else{
+                $students[$key]->course_id = $course->name;
+            }
+        }
         
         return view('student.index', [
-            'courses' => $courses
+            'courses' => $courses,
+            'students' => $students,
         ]);
+    }
+
+    public function search(StudentCreateRequest $request)
+    {
+        $students =  $this->service->search($request->id);
+        
+        return view('student.index', [
+            'students'  => $students,
+        ]);
+        
     }
 
     public function store(StudentCreateRequest $request)
@@ -47,7 +67,7 @@ class StudentsController extends Controller
             'messages'  => $request['messages']
         ]);
 
-        return redirect()->route('user.dashboard');
+        return redirect()->route('student.index');
     }
 
 
@@ -86,7 +106,7 @@ class StudentsController extends Controller
             'messages'  => $request['messages']
         ]);
 
-        return redirect()->route('user.dashboard');
+        return redirect()->route('student.index');
     }
 
     public function destroy($id)

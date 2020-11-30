@@ -58,18 +58,6 @@
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
 					<ul class="nav nav-secondary">
-                        <li class="nav-item">
-							<a href="{{route('user.dashboard')}}">
-								<i class="far fa-calendar-alt"></i>
-								<p>Dashboard</p>
-							</a>
-						</li>
-						{{-- <li class="nav-item">
-							<a href="{{route('user.index')}}">
-								<i class="far fa-calendar-alt"></i>
-								<p>Usuario</p>
-							</a>
-						</li> --}}
 						<li class="nav-item">
 							<a href="{{route('student.index')}}">
 								<i class="fas fa-desktop"></i>
@@ -95,7 +83,7 @@
 						</ul>
 					</div>
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="card">
 								<div class="card-header">
 									<div class="card-title">Novo Curso - Manual</div>
@@ -118,7 +106,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-md-6">
 							<div class="card">
 								<div class="card-header">
 									<div class="card-title">Novo Curso - Arquivo XML</div>
@@ -137,10 +125,46 @@
 								<div class="card-action">
                                     {!! Form::submit('Cadastrar', ['class' => 'btn btn-success']) !!}
                                     {!! Form::close() !!}
-									<button class="btn btn-danger">Cancel</button>
 								</div>
 							</div>
-						</div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Cursos</div>
+                                </div>
+                                <div class="card-body">
+                                    @if($courses == "[]" )
+                                        <div class="text-center">Não há cursos cadastrados</div>
+                                    @else
+                                        <table class="table table-head-bg-success">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Nome</th>
+                                                    <th scope="col">Ação</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($courses as $course)
+                                                    <tr>
+                                                        <td>{{$course->id}}</td>
+                                                        <td>{{$course->name}}</td>
+                                                        <td>
+                                                            {!! Form::open( ['route' => ['course.destroy', $course->id ], 'method' => 'delete']) !!}
+                                                                {!! Form::submit('Remover') !!}
+                                                            {!! Form::close() !!}
+                                                        <a href="{{ route('course.edit', $course->id) }}">Editar</a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        {!! $courses->links() !!}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
 					</div>
 				</div>
 			</div>
@@ -230,6 +254,10 @@
         <!-- Millenium DEMO methods, don't include it in your project! -->
         <script src="{{ asset('assets/js/setting-demo2.js') }}"></script>
         <script>
+            
+            var element = document.getElementsByTagName("svg");
+            element[0].removeAttribute("viewBox");
+            element[1].removeAttribute("viewBox");
             $('#displayNotif').on('click', function(){
                 var placementFrom = $('#notify_placement_from option:selected').val();
                 var placementAlign = $('#notify_placement_align option:selected').val();

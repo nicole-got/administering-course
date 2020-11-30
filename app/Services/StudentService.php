@@ -19,6 +19,16 @@ class StudentService
         $this->validator = $validator;
     }
 
+    public function search($id){
+        if(!$id) {
+            $student = $this->repository->paginate(3);
+        }else{
+            $student = $this->repository->where("id",$id)->paginate(3);
+        }
+        
+        return $student;
+    }
+
     public function store($data)
     { 
         try

@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name'      =>  "nicole",
-            'email'     =>  "nicole2@nicole.com",
+            'name'      =>  "usuario",
+            'email'     =>  "teste123456@gmail.com",
             'password'  =>  "123456",
         ]);
         Student::create([
@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
             'complement'    =>  "casa",
         ]);
         Course::create([
-            'name'          =>  "administracao",
+            'name'          =>  "sistemas",
         ]);
     }
 }

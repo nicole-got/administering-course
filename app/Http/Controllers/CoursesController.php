@@ -33,9 +33,10 @@ class CoursesController extends Controller
      */
     public function index()
     {
-        $users = \App\Entities\User::pluck("name","id")->all();
+        $courses = $this->repository->paginate(3);
+        
         return view('course.index', [
-            'users' => $users
+            'courses' => $courses
         ]);
     }
 
@@ -60,7 +61,7 @@ class CoursesController extends Controller
             'messages'  => $request['messages']
         ]);
 
-        return redirect()->route('user.dashboard');
+        return redirect()->route('course.index');
     }
 
     /**
@@ -107,7 +108,7 @@ class CoursesController extends Controller
         $students = $this->repository->all();
         $courses = \App\Entities\Course::all();
 
-        return redirect()->route('user.dashboard');
+        return redirect()->route('course.index');
     }
 
     public function destroy($id)

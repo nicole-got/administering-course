@@ -21,7 +21,7 @@ class DashboardController extends Controller
 
     public function Index()
     {
-        $students = \App\Entities\Student::all();
+        $students = \App\Entities\Student::paginate(3);
         foreach($students as $key => $student){
             $c = \App\Entities\Course::find($student->course_id);
             $students[$key]->course_id = $c->name;
