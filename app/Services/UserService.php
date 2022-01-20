@@ -33,7 +33,7 @@ class UserService
                 'data'      => $usuario
             ];
         }
-        catch(Exception $err)
+        catch(Exception $err) 
         {
             switch(get_class($err))
             {
@@ -56,6 +56,8 @@ class UserService
             $this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
             $usuario = $this->repository->update($data, $id);
+
+            
             return 
             [
                 'success'   => true,
